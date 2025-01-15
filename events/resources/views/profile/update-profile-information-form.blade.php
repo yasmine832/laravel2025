@@ -59,6 +59,7 @@
             <x-input-error for="name" class="mt-2" />
         </div>
 
+
         <!-- Email -->
         <div class="col-span-6 sm:col-span-4">
             <x-label for="email" value="{{ __('Email') }}" />
@@ -81,6 +82,26 @@
                 @endif
             @endif
         </div>
+
+        <div class="col-span-6 sm:col-span-4">
+            <x-label for="birthday" value="{{ __('Birthday') }}" />
+            <x-input 
+                id="birthday" 
+                type="date" 
+                class="mt-1 block w-full" 
+                wire:model.live="state.birthday" 
+                :value="old('birthday', $state['birthday'] ?? '')"
+            />
+            <x-input-error for="birthday" class="mt-2" />
+        </div>
+
+        <!-- About Me -->
+        <div class="col-span-6 sm:col-span-4">
+            <x-label for="about_me" value="{{ __('About Me') }}" />
+            <textarea id="about_me" class="border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm mt-1 block w-full" wire:model="state.about_me" rows="4"></textarea>
+            <x-input-error for="about_me" class="mt-2" />
+        </div>
+
     </x-slot>
 
     <x-slot name="actions">
