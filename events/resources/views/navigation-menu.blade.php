@@ -15,7 +15,14 @@
                     <x-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
+            </div>
+                @if (Auth::user()->is_admin)
+                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                <x-nav-link href="{{ route('admin.index') }}" :active="request()->routeIs('admin.*')">
+                {{ __('Admin Panel') }}
+                </x-nav-link>
                 </div>
+                @endif
             </div>
 
             <div class="hidden sm:flex sm:items-center sm:ms-6">
@@ -98,7 +105,7 @@
                                 {{ __('Manage Account') }}
                             </div>
 
-                            <x-dropdown-link href="{{ route('profile.show') }}">
+                            <x-dropdown-link  href="{{ route('profile.show', ['name' => Auth::user()->name]) }}">
                                 {{ __('Profile') }}
                             </x-dropdown-link>
 
@@ -161,7 +168,7 @@
 
             <div class="mt-3 space-y-1">
                 <!-- Account Management -->
-                <x-responsive-nav-link href="{{ route('profile.show') }}" :active="request()->routeIs('profile.show')">
+                <x-responsive-nav-link  href="{{ route('profile.show', ['name' => Auth::user()->name]) }}" :active="request()->routeIs('profile.show')">
                     {{ __('Profile') }}
                 </x-responsive-nav-link>
 

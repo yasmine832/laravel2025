@@ -9,6 +9,7 @@ use Illuminate\Validation\Rule;
 use Laravel\Fortify\Contracts\UpdatesUserProfileInformation;
 
 class UpdateUserProfileInformation implements UpdatesUserProfileInformation
+
 {
     /**
      * Validate and update the given user's profile information.
@@ -18,9 +19,11 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
     public function update(User $user, array $input): void
     {
         Validator::make($input, [
-            'name' => ['required', 'string', 'max:255'],
+            'name' => ['required', 'string', 'max:255'], 
             'email' => ['required', 'email', 'max:255', Rule::unique('users')->ignore($user->id)],
             'photo' => ['nullable', 'mimes:jpg,jpeg,png', 'max:1024'],
+            'birthday' => ['nullable', 'date'],
+            'about_me' => ['nullable', 'string', 'max:1000'],
         ])->validateWithBag('updateProfileInformation');
 
         if (isset($input['photo'])) {
@@ -34,6 +37,8 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
             $user->forceFill([
                 'name' => $input['name'],
                 'email' => $input['email'],
+                'birthday' => isset($input['birthday']) ? $input['birthday'] : $user->birthday,
+                'about_me' => $input['about_me'] ?? $user->about_me,  
             ])->save();
         }
     }
@@ -49,6 +54,8 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
             'name' => $input['name'],
             'email' => $input['email'],
             'email_verified_at' => null,
+            'birthday' => $input['birthday'] ?? $user->birthday,
+            'about_me' => $input['about_me'] ?? $user->about_me,
         ])->save();
 
         $user->sendEmailVerificationNotification();
