@@ -4,9 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\NewsController;
-use App\Http\Controllers\Admin\FAQItemController;
+use App\Http\Controllers\ContactController;
 use App\Http\Controllers\FAQController;
-use App\Http\Controllers\Admin\FAQCategoryController;
 
 
 Route::get('/', function () {
@@ -50,3 +49,6 @@ Route::controller(FAQController::class)->group(function () {
     Route::put('/faq/items/{item}', 'updateItem')->name('faq.items.update');
     Route::delete('/faq/items/{item}', 'destroyItem')->name('faq.items.destroy');
 });
+
+Route::get('/contact', [ContactController::class, 'show'])->name('contact.show');
+Route::post('/contact', [ContactController::class, 'submit'])->name('contact.submit');

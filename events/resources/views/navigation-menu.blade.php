@@ -30,6 +30,11 @@
             <x-nav-link href="{{ route('faq') }}" :active="request()->routeIs('faq')">
                 {{ __('FAQ') }}
             </x-nav-link>
+
+
+            <x-nav-link href="{{ route('contact.show') }}" :active="request()->routeIs('contact.show')">
+                {{ __('Contact') }}
+            </x-nav-link>
                 </div>
             </div>
 
@@ -159,17 +164,20 @@
             </x-responsive-nav-link>
 
                @if (Auth::user()->is_admin)
-                <x-nav-link href="{{ route('admin.index') }}" :active="request()->routeIs('admin.*')">
+               <x-responsive-nav-link href="{{ route('admin.index') }}" :active="request()->routeIs('admin.*')">
                 {{ __('Admin Panel') }}
-                </x-nav-link>
+                </x-responsive-nav-link>
                 @endif
 
-            <x-nav-link href="{{ route('news.index') }}" :active="request()->routeIs('news.*')">
+            <x-responsive-nav-link href="{{ route('news.index') }}" :active="request()->routeIs('news.*')">
                 {{ __('News') }}
-            </x-nav-link>
-            <x-nav-link href="{{ route('faq') }}" :active="request()->routeIs('faq')">
+            </x-responsive-nav-link>
+            <x-responsive-nav-link href="{{ route('faq') }}" :active="request()->routeIs('faq')">
                 {{ __('FAQ') }}
-            </x-nav-link>
+            </x-responsive-nav-link>
+            <x-responsive-nav-link  href="{{ route('contact.show') }}" :active="request()->routeIs('contact.show')">
+                {{ __('Contact') }}
+            </x-responsive-nav-link>
 
 
         </div>
