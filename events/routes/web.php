@@ -4,6 +4,10 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\NewsController;
+use App\Http\Controllers\Admin\FAQItemController;
+use App\Http\Controllers\FAQController;
+use App\Http\Controllers\Admin\FAQCategoryController;
+
 
 Route::get('/', function () {
     return view('welcome');
@@ -36,3 +40,13 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
 });
 
 Route::resource('news', NewsController::class);
+
+Route::controller(FAQController::class)->group(function () {
+    Route::get('/faq', 'index')->name('faq');
+    Route::post('/faq/categories', 'storeCategory')->name('faq.categories.store');
+    Route::put('/faq/categories/{category}', 'updateCategory')->name('faq.categories.update');
+    Route::delete('/faq/categories/{category}', 'destroyCategory')->name('faq.categories.destroy');
+    Route::post('/faq/categories/{category}/items', 'storeItem')->name('faq.items.store');
+    Route::put('/faq/items/{item}', 'updateItem')->name('faq.items.update');
+    Route::delete('/faq/items/{item}', 'destroyItem')->name('faq.items.destroy');
+});

@@ -16,7 +16,7 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             @if (session('success'))
-                <div class="mb-4 bg-green-100 border border-green-400 text-green-700 dark:bg-green-800 dark:border-green-600 dark:text-green-200 px-4 py-3 rounded relative">
+            <div class="mb-6 bg-green-500/10 border-l-4 border-green-500 text-green-400 p-4 rounded" role="alert">
                     <span class="block sm:inline">{{ session('success') }}</span>
                 </div>
             @endif
