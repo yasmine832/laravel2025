@@ -9,12 +9,27 @@ use Illuminate\Support\Facades\Hash;
 
 class AdminController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $users = User::where('id', '!=', Auth::id())->get();
+        $query = User::where('id', '!=', Auth::id());
+
+        // Search by name or email
+        if ($request->filled('search')) {
+            $query->where(function ($q) use ($request) {
+                $q->where('name', 'like', '%' . $request->input('search') . '%')
+                    ->orWhere('email', 'like', '%' . $request->input('search') . '%');
+            });
+        }
+
+        // Filter by role (admin or user)
+        if ($request->filled('role')) {
+            $query->where('is_admin', $request->input('role') === 'admin');
+        }
+
+        $users = $query->get();
+
         return view('admin.index', compact('users'));
     }
-
     public function toggleAdmin(User $user)
     {
         if ($user->id !== Auth::id()) {

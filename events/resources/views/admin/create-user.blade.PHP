@@ -1,48 +1,84 @@
 <x-admin-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+        <h2 class="text-2xl font-bold text-slate-200">
             {{ __('Create User') }}
         </h2>
     </x-slot>
 
-    <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-xl sm:rounded-lg">
+    <div class="bg-slate-900 rounded-lg shadow-lg overflow-hidden">
         <div class="p-6">
-                    <form method="POST" action="{{ route('admin.store-user') }}">
-                        @csrf
+            <form method="POST" action="{{ route('admin.store-user') }}">
+                @csrf
 
-                        <div class="mb-4">
-                            <x-label for="name" value="{{ __('Name') }}" />
-                            <x-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus />
-                            <x-input-error for="name" class="mt-2" />
-                        </div>
-
-                        <div class="mb-4">
-                            <x-label for="email" value="{{ __('Email') }}" />
-                            <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required />
-                            <x-input-error for="email" class="mt-2" />
-                        </div>
-
-                        <div class="mb-4">
-                            <x-label for="password" value="{{ __('Password') }}" />
-                            <x-input id="password" class="block mt-1 w-full" type="password" name="password" required />
-                            <x-input-error for="password" class="mt-2" />
-                        </div>
-
-                        <div class="mb-4">
-                            <label class="flex items-center">
-                                <input type="checkbox" name="is_admin" class="rounded dark:bg-gray-900 border-gray-300 dark:border-gray-700 text-indigo-600 shadow-sm focus:ring-indigo-500 dark:focus:ring-indigo-600 dark:focus:ring-offset-gray-800" value="1">
-                                <span class="ml-2 text-sm text-gray-600 dark:text-gray-400">{{ __('Make Admin') }}</span>
-                            </label>
-                        </div>
-
-                        <div class="flex items-center justify-end mt-4">
-                            <x-button>
-                                {{ __('Create User') }}
-                            </x-button>
-                        </div>
-                    </form>
+                <!-- Name Field -->
+                <div class="mb-4">
+                    <label for="name" class="block text-sm font-semibold text-slate-300">
+                        {{ __('Name') }}
+                    </label>
+                    <input id="name" 
+                           class="block mt-2 w-full px-4 py-2 rounded-lg bg-slate-800 text-slate-200 border border-slate-700 focus:ring-indigo-500 focus:border-indigo-500" 
+                           type="text" 
+                           name="name" 
+                           value="{{ old('name') }}" 
+                           required autofocus />
+                    @error('name')
+                        <span class="text-sm text-red-500 mt-1">{{ $message }}</span>
+                    @enderror
                 </div>
-            </div>
+
+                <!-- Email Field -->
+                <div class="mb-4">
+                    <label for="email" class="block text-sm font-semibold text-slate-300">
+                        {{ __('Email') }}
+                    </label>
+                    <input id="email" 
+                           class="block mt-2 w-full px-4 py-2 rounded-lg bg-slate-800 text-slate-200 border border-slate-700 focus:ring-indigo-500 focus:border-indigo-500" 
+                           type="email" 
+                           name="email" 
+                           value="{{ old('email') }}" 
+                           required />
+                    @error('email')
+                        <span class="text-sm text-red-500 mt-1">{{ $message }}</span>
+                    @enderror
+                </div>
+
+                <!-- Password Field -->
+                <div class="mb-4">
+                    <label for="password" class="block text-sm font-semibold text-slate-300">
+                        {{ __('Password') }}
+                    </label>
+                    <input id="password" 
+                           class="block mt-2 w-full px-4 py-2 rounded-lg bg-slate-800 text-slate-200 border border-slate-700 focus:ring-indigo-500 focus:border-indigo-500" 
+                           type="password" 
+                           name="password" 
+                           required />
+                    @error('password')
+                        <span class="text-sm text-red-500 mt-1">{{ $message }}</span>
+                    @enderror
+                </div>
+
+                <!-- Admin Checkbox -->
+                <div class="mb-4">
+                    <label class="flex items-center">
+                        <input type="checkbox" 
+                               name="is_admin" 
+                               class="rounded bg-slate-900 border-slate-700 text-indigo-600 focus:ring-indigo-500">
+                        <span class="ml-2 text-sm text-slate-300">
+                            {{ __('Make Admin') }}
+                        </span>
+                    </label>
+                </div>
+
+                <!-- Submit Button -->
+                <div class="flex items-center justify-end mt-4">
+                    <button type="submit" 
+                            class="px-6 py-2 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-lg transition duration-200">
+                        {{ __('Create User') }}
+                    </button>
+                </div>
+            </form>
         </div>
     </div>
 </x-admin-layout>
+
+ <!--  Adapted from code generated by ChatGPT:https://chatgpt.com/share/67890672-16d4-8007-a30f-19d18c37df6b -->
