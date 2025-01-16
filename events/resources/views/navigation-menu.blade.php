@@ -15,15 +15,19 @@
                     <x-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
-            </div>
+                    
+          
                 @if (Auth::user()->is_admin)
-                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                 <x-nav-link href="{{ route('admin.index') }}" :active="request()->routeIs('admin.*')">
                 {{ __('Admin Panel') }}
                 </x-nav-link>
-                </div>
                 @endif
-            </div>
+
+            <x-nav-link href="{{ route('news.index') }}" :active="request()->routeIs('news.*')">
+                {{ __('News') }}
+            </x-nav-link>
+        </div>
+    </div>
 
             <div class="hidden sm:flex sm:items-center sm:ms-6">
                 <!-- Teams Dropdown -->

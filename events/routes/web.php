@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\NewsController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -33,3 +34,5 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::post('/users', [AdminController::class, 'storeUser'])->name('store-user');
     });
 });
+
+Route::resource('news', NewsController::class);
