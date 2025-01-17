@@ -28,6 +28,9 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::put('/user/profile', [ProfileController::class, 'update'])->name('profile.update');
 });
 
+Route::get('/users/{user}', [ProfileController::class, 'publicProfile'])->name('users.profile');
+
+
 Route::middleware(['auth:sanctum', 'verified'])->group(function () {
 
     Route::middleware(['admin'])->prefix('admin')->name('admin.')->group(function () {
