@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\News;
 use App\Models\User;
+use App\Models\Comment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
@@ -109,4 +110,29 @@ class NewsController extends Controller
 
         return redirect()->route('news.index')->with('success', 'News item deleted successfully');
     }
+
+public function storeComment(Request $request, News $news)
+{
+    $validated = $request->validate([
+        'content' => 'required|string|max:1000'
+    ]);
+
+    $news->comments()->create([
+        'content' => $validated['content'],
+        'user_id' => auth()->id()
+    ]);
+
+    return back()->with('success', 'Comment added successfully');
+}
+
+public function destroyComment(News $news, Comment $comment)
+{
+    if (auth()->user()?->isAdmin() || auth()->id() === $comment->user_id) {
+        $comment->delete();
+        return back()->with('success', 'Comment deleted successfully');
+    }
+
+    abort(403);
+}
+
 }

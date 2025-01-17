@@ -38,8 +38,6 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     });
 });
 
-Route::resource('news', NewsController::class);
-
 Route::controller(FAQController::class)->group(function () {
     Route::get('/faq', 'index')->name('faq');
     Route::post('/faq/categories', 'storeCategory')->name('faq.categories.store');
@@ -52,3 +50,10 @@ Route::controller(FAQController::class)->group(function () {
 
 Route::get('/contact', [ContactController::class, 'show'])->name('contact.show');
 Route::post('/contact', [ContactController::class, 'submit'])->name('contact.submit');
+
+Route::middleware(['auth:sanctum'])->group(function () {
+    Route::post('/news/{news}/comments', [NewsController::class, 'storeComment'])->name('news.comments.store');
+    Route::delete('/news/{news}/comments/{comment}', [NewsController::class, 'destroyComment'])->name('news.comments.destroy');
+});
+
+Route::resource('news', NewsController::class);

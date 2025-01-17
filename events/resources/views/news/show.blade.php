@@ -27,10 +27,11 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             @if (session('success'))
-                <div class="mb-4 bg-green-100 border border-green-400 text-green-700 dark:bg-green-800 dark:border-green-600 dark:text-green-200 px-4 py-3 rounded relative">
-                    <span class="block sm:inline">{{ session('success') }}</span>
-                </div>
-            @endif
+            <div class="mb-6 bg-green-500/10 border-l-4 border-green-500 text-green-400 p-4 rounded" role="alert">
+                <p class="font-medium">{{ session('success') }}</p>
+            </div>
+        @endif
+
 
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6">
@@ -52,5 +53,80 @@
                 </div>
             </div>
         </div>
+<div class="mt-8 bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
+    <div class="p-6">
+        <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">
+            {{ __('Comments') }}
+        </h3>
+
+        @auth
+            <form action="{{ route('news.comments.store', $news) }}" method="POST" class="mb-6">
+                @csrf
+                <div>
+                    <x-label for="content" value="{{ __('Add a comment') }}" />
+                    <textarea
+                        name="content"
+                        id="content"
+                        rows="3"
+                        class="border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm mt-1 block w-full"
+                        required
+                    >{{ old('content') }}</textarea>
+                    <x-input-error for="content" class="mt-2" />
+                </div>
+
+                <div class="mt-4">
+                    <x-button>
+                        {{ __('Post Comment') }}
+                    </x-button>
+                </div>
+            </form>
+        @else
+            <p class="text-gray-600 dark:text-gray-400 mb-6">
+                <a href="{{ route('login') }}" class="text-indigo-600 hover:text-indigo-900 dark:text-indigo-400 dark:hover:text-indigo-300">
+                    {{ __('Log in') }}
+                </a>
+                {{ __('to add a comment.') }}
+            </p>
+        @endauth
+
+        <div class="space-y-6">
+            @forelse ($news->comments as $comment)
+                <div class="flex space-x-4">
+                    <div class="flex-shrink-0">
+                        <img src="{{ $comment->user->profile_photo_url }}" alt="{{ $comment->user->name }}" class="h-10 w-10 rounded-full">
+                    </div>
+                    <div class="flex-grow">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <div class="text-sm font-medium text-gray-900 dark:text-gray-100">
+                                    {{ $comment->user->name }}
+                                </div>
+                                <div class="text-sm text-gray-500 dark:text-gray-400">
+                                    {{ $comment->created_at->diffForHumans() }}
+                                </div>
+                            </div>
+                            @if(Auth::user()?->isAdmin() || Auth::id() === $comment->user_id)
+                                <form method="POST" action="{{ route('news.comments.destroy', [$news, $comment]) }}">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="text-sm text-red-600 hover:text-red-900 dark:text-red-400 dark:hover:text-red-300" onclick="return confirm('Are you sure?')">
+                                        {{ __('Delete') }}
+                                    </button>
+                                </form>
+                            @endif
+                        </div>
+                        <div class="mt-1 text-sm text-gray-700 dark:text-gray-300">
+                            {{ $comment->content }}
+                        </div>
+                    </div>
+                </div>
+            @empty
+                <p class="text-gray-500 dark:text-gray-400">
+                    {{ __('No comments yet.') }}
+                </p>
+            @endforelse
+        </div>
+    </div>
+</div>
     </div>
 </x-app-layout>
