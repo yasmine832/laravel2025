@@ -20,6 +20,19 @@ A Laravel 11 web application.
 - Reply to contact forms in Admin panel
 - Comments on news articles
 
+## Installation Instructions
+
+1. Clone the repository
+2. Run `composer install`
+3. Run `npm install`
+4. Copy `.env.example` to `.env`
+5. Configure database settings in `.env`
+6. Run `php artisan key:generate`
+7. Run `php artisan migrate:fresh --seed`
+8. Run `php artisan storage:link`
+9. Run `npm run dev`
+10. Run `php artisan serve`
+
 ## Code Sources and References
 
 - Laravel 11 Documentation: https://laravel.com/docs/11.x
