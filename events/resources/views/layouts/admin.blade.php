@@ -44,6 +44,16 @@
                             </svg>
                             <span>Create User</span>
                         </a>
+                        
+                        <a href="{{ route('admin.contacts.index') }}" 
+   class="flex items-center space-x-3 p-3 rounded-lg {{ request()->routeIs('admin.contacts.index') ? 'bg-indigo-600 text-white' : 'text-slate-300 hover:bg-slate-800' }} transition-colors">
+    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+    </svg>
+                         <span>Requests</span>
+                     </a>
+                     
+
                     </nav>
 
                     <!-- Bottom Actions -->

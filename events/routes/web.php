@@ -54,6 +54,14 @@ Route::controller(FAQController::class)->group(function () {
 Route::get('/contact', [ContactController::class, 'show'])->name('contact.show');
 Route::post('/contact', [ContactController::class, 'submit'])->name('contact.submit');
 
+Route::middleware(['auth', 'admin'])->group(function () {
+    Route::get('/admin/contacts', [ContactController::class, 'index'])->name('admin.contacts.index');
+    Route::post('/admin/contacts/{contact}/reply', [ContactController::class, 'reply'])->name('admin.contacts.reply');
+    Route::delete('/admin/contacts/{contact}', [ContactController::class, 'destroy'])->name('admin.contacts.destroy')->middleware(['auth', 'admin']);
+
+});
+
+
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/news/{news}/comments', [NewsController::class, 'storeComment'])->name('news.comments.store');
     Route::delete('/news/{news}/comments/{comment}', [NewsController::class, 'destroyComment'])->name('news.comments.destroy');
